@@ -103,7 +103,7 @@ export default function HomePage() {
                           )}
                         </p>
                         <p className="font-medium text-blue-600">
-                          {event.sessions.length} sessions
+                          {event.sessions?.length || 0} sessions
                         </p>
                       </div>
                     </motion.div>
