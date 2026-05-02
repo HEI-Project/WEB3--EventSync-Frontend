@@ -15,7 +15,7 @@ export default function HomePage() {
   useEffect(() => {
     api.events
       .list()
-      .then(setEvents)
+      .then((data) => setEvents(data))
       .catch((err) => console.error('[v0] Error loading events:', err))
       .finally(() => setLoading(false));
   }, []);

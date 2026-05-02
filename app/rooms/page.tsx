@@ -21,7 +21,7 @@ export default function RoomsPage() {
   useEffect(() => {
     api.rooms
       .list()
-      .then(setRooms)
+      .then((data) => setRooms(data))
       .catch((err) => console.error('[v0] Error loading rooms:', err))
       .finally(() => setLoading(false));
   }, []);

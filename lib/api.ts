@@ -1,6 +1,12 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
-export async function apiCall<T>(
+import type { Event, Session, Question, Speaker, SpeakerLite, Room, AuthResponse } from './types';
+
+interface RoomWithSessions extends Room {
+  sessions?: any[];
+}
+
+export async function apiCall<T = unknown>(
   endpoint: string,
   options?: RequestInit & { token?: string }
 ): Promise<T> {
@@ -30,12 +36,12 @@ export async function apiCall<T>(
 // Public endpoints
 export const api = {
   events: {
-    list: () => apiCall('/events'),
-    get: (id: string) => apiCall(`/events/${id}`),
+    list: () => apiCall<Event[]>('/events'),
+    get: (id: string) => apiCall<Event>(`/events/${id}`),
   },
   sessions: {
-    get: (id: string) => apiCall(`/sessions/${id}`),
-    getQuestions: (id: string) => apiCall(`/sessions/${id}/questions`),
+    get: (id: string) => apiCall<Session>(`/sessions/${id}`),
+    getQuestions: (id: string) => apiCall<Question[]>(`/sessions/${id}/questions`),
     askQuestion: (id: string, content: string, authorName?: string) =>
       apiCall(`/sessions/${id}/questions`, {
         method: 'POST',
@@ -47,11 +53,11 @@ export const api = {
       apiCall(`/questions/${id}/upvote`, { method: 'POST' }),
   },
   speakers: {
-    list: () => apiCall('/speakers'),
-    get: (id: string) => apiCall(`/speakers/${id}`),
+    list: () => apiCall<SpeakerLite[]>('/speakers'),
+    get: (id: string) => apiCall<Speaker>(`/speakers/${id}`),
   },
   rooms: {
-    list: () => apiCall('/rooms'),
+    list: () => apiCall<RoomWithSessions[]>('/rooms'),
   },
 };
 
@@ -59,88 +65,88 @@ export const api = {
 export const adminApi = {
   auth: {
     login: (email: string, password: string) =>
-      apiCall('/admin/auth/login', {
+      apiCall<AuthResponse>('/admin/auth/login', {
         method: 'POST',
         body: JSON.stringify({ email, password }),
       }),
     register: (email: string, password: string) =>
-      apiCall('/admin/auth/register', {
+      apiCall<AuthResponse>('/admin/auth/register', {
         method: 'POST',
         body: JSON.stringify({ email, password }),
       }),
   },
   events: {
     create: (data: any, token: string) =>
-      apiCall('/admin/events', {
+      apiCall<Event>('/admin/events', {
         method: 'POST',
         body: JSON.stringify(data),
         token,
       }),
     update: (id: string, data: any, token: string) =>
-      apiCall(`/admin/events/${id}`, {
+      apiCall<Event>(`/admin/events/${id}`, {
         method: 'PUT',
         body: JSON.stringify(data),
         token,
       }),
     delete: (id: string, token: string) =>
-      apiCall(`/admin/events/${id}`, {
+      apiCall<void>(`/admin/events/${id}`, {
         method: 'DELETE',
         token,
       }),
   },
   sessions: {
     create: (data: any, token: string) =>
-      apiCall('/admin/sessions', {
+      apiCall<Session>('/admin/sessions', {
         method: 'POST',
         body: JSON.stringify(data),
         token,
       }),
     update: (id: string, data: any, token: string) =>
-      apiCall(`/admin/sessions/${id}`, {
+      apiCall<Session>(`/admin/sessions/${id}`, {
         method: 'PUT',
         body: JSON.stringify(data),
         token,
       }),
     delete: (id: string, token: string) =>
-      apiCall(`/admin/sessions/${id}`, {
+      apiCall<void>(`/admin/sessions/${id}`, {
         method: 'DELETE',
         token,
       }),
   },
   speakers: {
     create: (data: any, token: string) =>
-      apiCall('/admin/speakers', {
+      apiCall<Speaker>('/admin/speakers', {
         method: 'POST',
         body: JSON.stringify(data),
         token,
       }),
     update: (id: string, data: any, token: string) =>
-      apiCall(`/admin/speakers/${id}`, {
+      apiCall<Speaker>(`/admin/speakers/${id}`, {
         method: 'PUT',
         body: JSON.stringify(data),
         token,
       }),
     delete: (id: string, token: string) =>
-      apiCall(`/admin/speakers/${id}`, {
+      apiCall<void>(`/admin/speakers/${id}`, {
         method: 'DELETE',
         token,
       }),
   },
   rooms: {
     create: (data: any, token: string) =>
-      apiCall('/admin/rooms', {
+      apiCall<Room>('/admin/rooms', {
         method: 'POST',
         body: JSON.stringify(data),
         token,
       }),
     update: (id: string, data: any, token: string) =>
-      apiCall(`/admin/rooms/${id}`, {
+      apiCall<Room>(`/admin/rooms/${id}`, {
         method: 'PUT',
         body: JSON.stringify(data),
         token,
       }),
     delete: (id: string, token: string) =>
-      apiCall(`/admin/rooms/${id}`, {
+      apiCall<void>(`/admin/rooms/${id}`, {
         method: 'DELETE',
         token,
       }),

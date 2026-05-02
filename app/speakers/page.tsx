@@ -15,7 +15,7 @@ export default function SpeakersPage() {
   useEffect(() => {
     api.speakers
       .list()
-      .then(setSpeakers)
+      .then((data) => setSpeakers(data))
       .catch((err) => console.error('[v0] Error loading speakers:', err))
       .finally(() => setLoading(false));
   }, []);

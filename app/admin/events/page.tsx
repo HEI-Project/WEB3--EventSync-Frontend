@@ -101,7 +101,7 @@ export default function AdminEventsPage() {
                             'fr-FR'
                           )}
                         </span>
-                        <span>{event.sessions.length} sessions</span>
+                        <span>{event.sessions?.length || 0} sessions</span>
                       </div>
                     </div>
                     <div className="ml-4 flex gap-2">

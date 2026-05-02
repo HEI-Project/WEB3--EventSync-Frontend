@@ -19,7 +19,7 @@ export default function SpeakerDetailPage() {
   useEffect(() => {
     api.speakers
       .get(speakerId)
-      .then(setSpeaker)
+      .then((data) => setSpeaker(data))
       .catch((err) => console.error('[v0] Error loading speaker:', err))
       .finally(() => setLoading(false));
   }, [speakerId]);

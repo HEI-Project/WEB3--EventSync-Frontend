@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { adminApi } from '@/lib/api';
+import { AuthResponse } from '@/lib/types';
 import { PageTransition } from '@/components/page-transition';
 
 export default function AdminLoginPage() {
@@ -19,7 +20,7 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     try {
-      const response = await adminApi.auth.login(email, password);
+      const response = await adminApi.auth.login(email, password) as AuthResponse;
       localStorage.setItem('adminToken', response.token);
       localStorage.setItem('adminUser', JSON.stringify(response.user));
       router.push('/admin/dashboard');
