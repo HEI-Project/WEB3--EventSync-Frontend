@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { api } from '@/lib/api';
+import { eventsApi } from '@/lib/api/events';
 import { Event, SessionLite } from '@/lib/types';
 import { SessionCard } from '@/components/session-card';
 import { SkeletonLoader } from '@/components/skeleton-loader';
@@ -19,7 +19,7 @@ export default function EventDetailPage() {
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
 
   useEffect(() => {
-    api.events
+    eventsApi
       .get(eventId)
       .then((data) => {
         setEvent(data);

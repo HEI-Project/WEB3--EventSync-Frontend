@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { api } from '@/lib/api';
+import { eventsApi } from '@/lib/api/events';
 import { Event } from '@/lib/types';
 import { SkeletonLoader } from '@/components/skeleton-loader';
 import { PageTransition } from '@/components/page-transition';
@@ -13,7 +13,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.events
+    eventsApi
       .list()
       .then((data) => setEvents(data))
       .catch((err) => console.error('[v0] Error loading events:', err))

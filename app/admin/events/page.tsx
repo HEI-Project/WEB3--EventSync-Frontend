@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { api, adminApi } from '@/lib/api';
+import { eventsApi } from '@/lib/api/events';
+import { adminEventsApi } from '@/lib/api/admin-events';
 import { Event } from '@/lib/types';
 import { SkeletonLoader } from '@/components/skeleton-loader';
 import { PageTransition } from '@/components/page-transition';
@@ -19,7 +20,7 @@ export default function AdminEventsPage() {
 
   const loadEvents = async () => {
     try {
-      const data = await api.events.list();
+      const data = await eventsApi.list();
       setEvents(data);
     } catch (err) {
       console.error('[v0] Error loading events:', err);
@@ -35,7 +36,7 @@ export default function AdminEventsPage() {
       setDeleting(id);
       const token = localStorage.getItem('adminToken');
       if (!token) throw new Error('No token');
-      await adminApi.events.delete(id, token);
+      await adminEventsApi.delete(id, token);
       await loadEvents();
     } catch (err) {
       console.error('[v0] Error deleting event:', err);

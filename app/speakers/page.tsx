@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { api } from '@/lib/api';
+import { speakersApi } from '@/lib/api/speakers';
 import { SpeakerLite } from '@/lib/types';
 import { SkeletonLoader } from '@/components/skeleton-loader';
 import { PageTransition } from '@/components/page-transition';
@@ -13,7 +13,7 @@ export default function SpeakersPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api.speakers
+    speakersApi
       .list()
       .then((data) => setSpeakers(data))
       .catch((err) => console.error('[v0] Error loading speakers:', err))

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { api } from '@/lib/api';
+import { roomsApi } from '@/lib/api/rooms';
 import { Room } from '@/lib/types';
 import { SkeletonLoader } from '@/components/skeleton-loader';
 import { PageTransition } from '@/components/page-transition';
@@ -19,7 +19,7 @@ export default function RoomsPage() {
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
 
   useEffect(() => {
-    api.rooms
+    roomsApi
       .list()
       .then((data) => setRooms(data))
       .catch((err) => console.error('[v0] Error loading rooms:', err))

@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { api } from '@/lib/api';
+import { sessionsApi } from '@/lib/api/sessions';
+import { questionsApi } from '@/lib/api/questions';
 import { Session, Question } from '@/lib/types';
 import { SkeletonLoader } from '@/components/skeleton-loader';
 import { PageTransition } from '@/components/page-transition';
@@ -22,7 +23,7 @@ export default function SessionDetailPage() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    api.sessions
+    sessionsApi
       .get(sessionId)
       .then((data) => {
         setSession(data);
@@ -43,7 +44,7 @@ export default function SessionDetailPage() {
   const loadQuestions = async () => {
     try {
       setQuestionsLoading(true);
-      const data = await api.sessions.getQuestions(sessionId);
+      const data = await questionsApi.get(sessionId);
       setQuestions(data);
     } catch (err) {
       console.error('[v0] Error loading questions:', err);
@@ -58,7 +59,7 @@ export default function SessionDetailPage() {
 
     try {
       setSubmitting(true);
-      await api.sessions.askQuestion(
+      await questionsApi.ask(
         sessionId,
         newQuestion,
         authorName || 'Anonyme'
@@ -75,7 +76,7 @@ export default function SessionDetailPage() {
 
   const handleUpvote = async (questionId: string) => {
     try {
-      await api.questions.upvote(questionId);
+      await questionsApi.upvote(questionId);
       await loadQuestions();
     } catch (err) {
       console.error('[v0] Error upvoting question:', err);

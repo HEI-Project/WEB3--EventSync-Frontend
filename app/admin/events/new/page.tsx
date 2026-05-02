@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { adminApi } from '@/lib/api';
+import { adminEventsApi } from '@/lib/api/admin-events';
 import { PageTransition } from '@/components/page-transition';
 
 export default function NewEventPage() {
@@ -33,7 +33,7 @@ export default function NewEventPage() {
       const token = localStorage.getItem('adminToken');
       if (!token) throw new Error('No token');
 
-      await adminApi.events.create(formData, token);
+      await adminEventsApi.create(formData, token);
       router.push('/admin/events');
     } catch (err) {
       setError('Erreur lors de la création');
