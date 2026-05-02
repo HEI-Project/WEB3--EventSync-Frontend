@@ -49,13 +49,13 @@ export default function EventDetailPage() {
   };
 
   const rooms = event
-    ? Array.from(new Set(event.sessions.map((s) => s.room.name)))
+    ? Array.from(new Set(event.sessions?.map((s) => s.room?.name).filter(Boolean)))
     : [];
 
   const filteredSessions = event
     ? selectedRoom
-      ? event.sessions.filter((s) => s.room.name === selectedRoom)
-      : event.sessions
+      ? event.sessions?.filter((s) => s.room?.name === selectedRoom) || []
+      : event.sessions || []
     : [];
 
   if (loading) return <SkeletonLoader count={5} />;

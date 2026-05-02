@@ -9,8 +9,8 @@ import { PageTransition } from '@/components/page-transition';
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('admin@eventsync.com');
-  const [password, setPassword] = useState('admin123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -20,7 +20,7 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     try {
-      const response = await authApi.login(email, password) as AuthResponse;
+      const response = await authApi.login(email, password);
       localStorage.setItem('adminToken', response.token);
       localStorage.setItem('adminUser', JSON.stringify(response.user));
       router.push('/admin/dashboard');
@@ -61,10 +61,11 @@ export default function AdminLoginPage() {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                   Email
                 </label>
                 <input
+                  id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -74,10 +75,11 @@ export default function AdminLoginPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
                   Mot de passe
                 </label>
                 <input
+                  id="password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -98,9 +100,7 @@ export default function AdminLoginPage() {
             </form>
 
             <p className="mt-6 text-center text-sm text-gray-600">
-              Email: admin@eventsync.com
-              <br />
-              Mot de passe: admin123
+              Contactez l'administrateur pour obtenir vos identifiants
             </p>
           </div>
         </motion.div>

@@ -3,15 +3,16 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { roomsApi } from '@/lib/api/rooms';
 import { adminRoomsApi } from '@/lib/api/admin-rooms';
 import { SkeletonLoader } from '@/components/skeleton-loader';
 import { PageTransition } from '@/components/page-transition';
 
+import type { SessionLite } from '@/lib/types';
+
 interface RoomItem {
   id: string;
   name: string;
-  sessions?: any[];
+  sessions?: SessionLite[];
 }
 
 export default function AdminRoomsPage() {
@@ -25,7 +26,9 @@ export default function AdminRoomsPage() {
 
   const loadRooms = async () => {
     try {
-      const data = await roomsApi.list();
+      const token = localStorage.getItem('adminToken');
+      if (!token) throw new Error('No token');
+      const data = await adminRoomsApi.list(token);
       setRooms(data);
     } catch (err) {
       console.error('[v0] Error loading rooms:', err);

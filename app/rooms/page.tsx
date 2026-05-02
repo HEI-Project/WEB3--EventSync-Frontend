@@ -4,13 +4,15 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { roomsApi } from '@/lib/api/rooms';
-import { Room } from '@/lib/types';
+import type { SessionLite } from '@/lib/types';
 import { SkeletonLoader } from '@/components/skeleton-loader';
 import { PageTransition } from '@/components/page-transition';
 import { SessionCard } from '@/components/session-card';
 
-interface RoomWithSessions extends Room {
-  sessions?: any[];
+interface RoomWithSessions {
+  id: string;
+  name: string;
+  sessions?: SessionLite[];
 }
 
 export default function RoomsPage() {

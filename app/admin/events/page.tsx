@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { eventsApi } from '@/lib/api/events';
 import { adminEventsApi } from '@/lib/api/admin-events';
 import { Event } from '@/lib/types';
 import { SkeletonLoader } from '@/components/skeleton-loader';
@@ -20,7 +19,9 @@ export default function AdminEventsPage() {
 
   const loadEvents = async () => {
     try {
-      const data = await eventsApi.list();
+      const token = localStorage.getItem('adminToken');
+      if (!token) throw new Error('No token');
+      const data = await adminEventsApi.list(token);
       setEvents(data);
     } catch (err) {
       console.error('[v0] Error loading events:', err);

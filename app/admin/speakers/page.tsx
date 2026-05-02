@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { speakersApi } from '@/lib/api/speakers';
 import { adminSpeakersApi } from '@/lib/api/admin-speakers';
 import { Speaker } from '@/lib/types';
 import { SkeletonLoader } from '@/components/skeleton-loader';
@@ -20,8 +19,10 @@ export default function AdminSpeakersPage() {
 
   const loadSpeakers = async () => {
     try {
-      const data = await speakersApi.list();
-      setSpeakers(data as Speaker[]);
+      const token = localStorage.getItem('adminToken');
+      if (!token) throw new Error('No token');
+      const data = await adminSpeakersApi.list(token);
+      setSpeakers(data);
     } catch (err) {
       console.error('[v0] Error loading speakers:', err);
     } finally {

@@ -10,6 +10,10 @@ interface CreateEventData {
 }
 
 export const adminEventsApi = {
+  list: (token: string) =>
+    apiCall<Event[]>('/admin/events', {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
   create: (data: CreateEventData, token: string) =>
     apiCall<Event>('/admin/events', {
       method: 'POST',

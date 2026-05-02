@@ -102,6 +102,7 @@ export function SessionCard({
                 e.preventDefault();
                 onAddFavorite(session.id);
               }}
+              aria-label={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
               className={`self-start text-sm font-medium transition-colors ${
                 isFavorite
                   ? 'text-amber-500 hover:text-amber-600'

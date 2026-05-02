@@ -1,11 +1,19 @@
 import { apiCall } from './client';
-import type { Room } from '@/lib/types';
+import type { Room, SessionLite } from '@/lib/types';
 
 interface CreateRoomData {
   name: string;
 }
 
+interface RoomWithSessions extends Room {
+  sessions?: SessionLite[];
+}
+
 export const adminRoomsApi = {
+  list: (token: string) =>
+    apiCall<RoomWithSessions[]>('/admin/rooms', {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
   create: (data: CreateRoomData, token: string) =>
     apiCall<Room>('/admin/rooms', {
       method: 'POST',

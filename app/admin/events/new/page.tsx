@@ -75,10 +75,11 @@ export default function NewEventPage() {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
                   Titre *
                 </label>
                 <input
+                  id="title"
                   type="text"
                   name="title"
                   value={formData.title}
@@ -89,10 +90,11 @@ export default function NewEventPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
                   Description
                 </label>
                 <textarea
+                  id="description"
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
@@ -102,10 +104,11 @@ export default function NewEventPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">
                   Lieu
                 </label>
                 <input
+                  id="location"
                   type="text"
                   name="location"
                   value={formData.location}
@@ -116,10 +119,11 @@ export default function NewEventPage() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 mb-2">
                     Date de début *
                   </label>
                   <input
+                    id="startDate"
                     type="datetime-local"
                     name="startDate"
                     value={formData.startDate}
@@ -130,10 +134,11 @@ export default function NewEventPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="endDate" className="block text-sm font-medium text-gray-700 mb-2">
                     Date de fin *
                   </label>
                   <input
+                    id="endDate"
                     type="datetime-local"
                     name="endDate"
                     value={formData.endDate}

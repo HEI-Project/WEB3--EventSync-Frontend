@@ -84,10 +84,11 @@ export default function NewSpeakerPage() {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
                   Nom complet *
                 </label>
                 <input
+                  id="fullName"
                   type="text"
                   name="fullName"
                   value={formData.fullName}
@@ -98,10 +99,11 @@ export default function NewSpeakerPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="photoUrl" className="block text-sm font-medium text-gray-700 mb-2">
                   URL de la photo
                 </label>
                 <input
+                  id="photoUrl"
                   type="url"
                   name="photoUrl"
                   value={formData.photoUrl}
@@ -111,10 +113,11 @@ export default function NewSpeakerPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="bio" className="block text-sm font-medium text-gray-700 mb-2">
                   Biographie
                 </label>
                 <textarea
+                  id="bio"
                   name="bio"
                   value={formData.bio}
                   onChange={handleChange}
@@ -124,10 +127,11 @@ export default function NewSpeakerPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="externalLinks" className="block text-sm font-medium text-gray-700 mb-2">
                   Liens externes (séparés par des virgules)
                 </label>
                 <input
+                  id="externalLinks"
                   type="text"
                   name="externalLinks"
                   value={formData.externalLinks}

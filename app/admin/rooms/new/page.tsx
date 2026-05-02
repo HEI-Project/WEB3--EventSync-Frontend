@@ -74,10 +74,11 @@ export default function NewRoomPage() {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                   Nom de la salle *
                 </label>
                 <input
+                  id="name"
                   type="text"
                   name="name"
                   value={formData.name}

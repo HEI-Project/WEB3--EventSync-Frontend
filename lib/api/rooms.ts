@@ -1,8 +1,8 @@
 import { apiCall } from './client';
-import type { Room } from '@/lib/types';
+import type { Room, SessionLite } from '@/lib/types';
 
 interface RoomWithSessions extends Room {
-  sessions?: any[];
+  sessions?: SessionLite[];
 }
 
 export const roomsApi = {

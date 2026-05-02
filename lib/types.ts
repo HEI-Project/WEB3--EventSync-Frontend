@@ -39,7 +39,7 @@ export interface Room {
 export interface Speaker {
   id: string;
   fullName: string;
-  photoUrl: string;
+  photoUrl: string | null;
   bio: string;
   externalLinks: string[];
   sessions: SessionLite[];

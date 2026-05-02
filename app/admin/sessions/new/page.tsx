@@ -92,10 +92,11 @@ export default function NewSessionPage() {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
                   Titre *
                 </label>
                 <input
+                  id="title"
                   type="text"
                   name="title"
                   value={formData.title}
@@ -106,10 +107,11 @@ export default function NewSessionPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
                   Description
                 </label>
                 <textarea
+                  id="description"
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
@@ -120,10 +122,11 @@ export default function NewSessionPage() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="startTime" className="block text-sm font-medium text-gray-700 mb-2">
                     Heure de début *
                   </label>
                   <input
+                    id="startTime"
                     type="datetime-local"
                     name="startTime"
                     value={formData.startTime}
@@ -134,10 +137,11 @@ export default function NewSessionPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="endTime" className="block text-sm font-medium text-gray-700 mb-2">
                     Heure de fin *
                   </label>
                   <input
+                    id="endTime"
                     type="datetime-local"
                     name="endTime"
                     value={formData.endTime}
@@ -150,10 +154,11 @@ export default function NewSessionPage() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="capacity" className="block text-sm font-medium text-gray-700 mb-2">
                     Capacité *
                   </label>
                   <input
+                    id="capacity"
                     type="number"
                     name="capacity"
                     value={formData.capacity}
@@ -165,10 +170,11 @@ export default function NewSessionPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="eventId" className="block text-sm font-medium text-gray-700 mb-2">
                     ID de l'événement *
                   </label>
                   <input
+                    id="eventId"
                     type="text"
                     name="eventId"
                     value={formData.eventId}
@@ -181,10 +187,11 @@ export default function NewSessionPage() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="roomId" className="block text-sm font-medium text-gray-700 mb-2">
                     ID de la salle *
                   </label>
                   <input
+                    id="roomId"
                     type="text"
                     name="roomId"
                     value={formData.roomId}
@@ -195,10 +202,11 @@ export default function NewSessionPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="speakerIds" className="block text-sm font-medium text-gray-700 mb-2">
                     IDs des intervenants (séparés par des virgules)
                   </label>
                   <input
+                    id="speakerIds"
                     type="text"
                     name="speakerIds"
                     value={formData.speakerIds}

@@ -130,7 +130,7 @@ export default function SessionDetailPage() {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-gray-500">SALLE</p>
-                  <p className="mt-1 text-gray-900">{session.room.name}</p>
+                  <p className="mt-1 text-gray-900">{session.room?.name || 'N/A'}</p>
                 </div>
                 <div>
                   <p className="text-xs font-medium text-gray-500">CAPACITÉ</p>
@@ -152,7 +152,7 @@ export default function SessionDetailPage() {
           >
             <h2 className="mb-4 text-xl font-bold text-gray-900">Intervenants</h2>
             <div className="grid gap-4 sm:grid-cols-2">
-              {session.speakers.map((speaker) => (
+              {session.speakers?.map((speaker) => (
                 <Link key={speaker.id} href={`/speakers/${speaker.id}`}>
                   <motion.div
                     whileHover={{ scale: 1.02 }}
@@ -248,6 +248,7 @@ export default function SessionDetailPage() {
                       </div>
                       <button
                         onClick={() => handleUpvote(question.id)}
+                        aria-label={`Upvoter la question de ${question.authorName}`}
                         className="ml-4 flex items-center gap-1 rounded-lg bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-blue-100 hover:text-blue-600 transition-colors whitespace-nowrap"
                       >
                         👍 {question.upvoteCount}

@@ -5,7 +5,6 @@ import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { adminRoomsApi } from '@/lib/api/admin-rooms';
-import { roomsApi } from '@/lib/api/rooms';
 import { PageTransition } from '@/components/page-transition';
 
 export default function EditRoomPage() {
@@ -20,8 +19,15 @@ export default function EditRoomPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    roomsApi
-      .list()
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      setError('Non authentifié');
+      setLoading(false);
+      return;
+    }
+
+    adminRoomsApi
+      .list(token)
       .then((rooms) => {
         const room = rooms.find((r) => r.id === roomId);
         if (room) {
@@ -30,7 +36,10 @@ export default function EditRoomPage() {
           setError('Salle non trouvée');
         }
       })
-      .catch((err) => console.error('[v0] Error loading room:', err))
+      .catch((err) => {
+        console.error('[v0] Error loading room:', err);
+        setError('Impossible de charger la salle');
+      })
       .finally(() => setLoading(false));
   }, [roomId]);
 
@@ -96,10 +105,11 @@ export default function EditRoomPage() {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                   Nom de la salle *
                 </label>
                 <input
+                  id="name"
                   type="text"
                   name="name"
                   value={formData.name}

@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { sessionsApi } from '@/lib/api/sessions';
 import { adminSessionsApi } from '@/lib/api/admin-sessions';
 import { Session } from '@/lib/types';
 import { SkeletonLoader } from '@/components/skeleton-loader';
@@ -20,7 +19,9 @@ export default function AdminSessionsPage() {
 
   const loadSessions = async () => {
     try {
-      const data = await sessionsApi.list();
+      const token = localStorage.getItem('adminToken');
+      if (!token) throw new Error('No token');
+      const data = await adminSessionsApi.list(token);
       setSessions(data);
     } catch (err) {
       console.error('[v0] Error loading sessions:', err);
@@ -94,9 +95,9 @@ export default function AdminSessionsPage() {
                       </p>
                       <div className="mt-4 flex flex-wrap gap-4 text-sm text-gray-500">
                         <span>📅 {new Date(session.startTime).toLocaleString('fr-FR')}</span>
-                        <span>🏛️ {session.room.name}</span>
+                        <span>🏛️ {session.room?.name || 'N/A'}</span>
                         <span>👥 {session.capacity}</span>
-                        <span>👤 {session.speakers.length} intervenant(s)</span>
+                        <span>👤 {session.speakers?.length || 0} intervenant(s)</span>
                       </div>
                     </div>
                     <div className="ml-4 flex gap-2">

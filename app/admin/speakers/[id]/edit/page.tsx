@@ -28,12 +28,15 @@ export default function EditSpeakerPage() {
       .then((speaker) => {
         setFormData({
           fullName: speaker.fullName,
-          photoUrl: speaker.photoUrl,
+          photoUrl: speaker.photoUrl || '',
           bio: speaker.bio,
-          externalLinks: speaker.externalLinks.join(', '),
+          externalLinks: speaker.externalLinks?.join(', ') || '',
         });
       })
-      .catch((err) => console.error('[v0] Error loading speaker:', err))
+      .catch((err) => {
+        console.error('[v0] Error loading speaker:', err);
+        setError("Impossible de charger l'intervenant");
+      })
       .finally(() => setLoading(false));
   }, [speakerId]);
 
@@ -106,10 +109,11 @@ export default function EditSpeakerPage() {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
                   Nom complet *
                 </label>
                 <input
+                  id="fullName"
                   type="text"
                   name="fullName"
                   value={formData.fullName}
@@ -120,10 +124,11 @@ export default function EditSpeakerPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="photoUrl" className="block text-sm font-medium text-gray-700 mb-2">
                   URL de la photo
                 </label>
                 <input
+                  id="photoUrl"
                   type="url"
                   name="photoUrl"
                   value={formData.photoUrl}
@@ -133,10 +138,11 @@ export default function EditSpeakerPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="bio" className="block text-sm font-medium text-gray-700 mb-2">
                   Biographie
                 </label>
                 <textarea
+                  id="bio"
                   name="bio"
                   value={formData.bio}
                   onChange={handleChange}
@@ -146,10 +152,11 @@ export default function EditSpeakerPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="externalLinks" className="block text-sm font-medium text-gray-700 mb-2">
                   Liens externes (séparés par des virgules)
                 </label>
                 <input
+                  id="externalLinks"
                   type="text"
                   name="externalLinks"
                   value={formData.externalLinks}

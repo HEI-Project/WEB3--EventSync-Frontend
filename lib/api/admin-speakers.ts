@@ -9,6 +9,10 @@ interface CreateSpeakerData {
 }
 
 export const adminSpeakersApi = {
+  list: (token: string) =>
+    apiCall<Speaker[]>('/admin/speakers', {
+      headers: { Authorization: `Bearer ${token}` },
+    }),
   create: (data: CreateSpeakerData, token: string) =>
     apiCall<Speaker>('/admin/speakers', {
       method: 'POST',

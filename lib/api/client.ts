@@ -25,7 +25,14 @@ export async function apiCall<T = unknown>(
   });
 
   if (!response.ok) {
-    throw new Error(`API Error: ${response.status}`);
+    let message = `API Error: ${response.status}`;
+    try {
+      const body = await response.json();
+      if (body?.message) message = body.message;
+    } catch {
+      // ignore parse error on failure response
+    }
+    throw new Error(message);
   }
 
   return response.json();
