@@ -3,7 +3,7 @@
 ## 📁 Árbol de Directorios
 
 ```
-/vercel/share/v0-project/
+/vercel/share/eventsync/frontend/
 ├── app/
 │   ├── layout.tsx                          # Layout principal
 │   ├── page.tsx                            # 🏠 Página principal - Lista eventos
@@ -222,4 +222,3 @@ public/
 
 ---
 
-¡Proyecto listo para desarrollo y despliegue! 🎉
