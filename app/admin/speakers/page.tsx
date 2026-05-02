@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { adminSpeakersApi } from '@/lib/api/admin-speakers';
 import { Speaker } from '@/lib/types';
 import { SkeletonLoader } from '@/components/skeleton-loader';
-import { PageTransition } from '@/components/page-transition';
+import { ArrowLeft, Users, Plus, Trash2, Edit, Mic } from 'lucide-react';
 
 export default function AdminSpeakersPage() {
   const [speakers, setSpeakers] = useState<Speaker[]>([]);
@@ -48,78 +48,100 @@ export default function AdminSpeakersPage() {
   };
 
   return (
-    <PageTransition>
-      <div className="min-h-screen bg-white">
-        <header className="border-b border-gray-200 bg-white">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between">
-              <div>
-                <Link href="/admin/dashboard" className="text-blue-600 hover:text-blue-800 mb-4 inline-block">
-                  ← Tableau de bord
-                </Link>
-                <h1 className="text-3xl font-bold text-gray-900">Intervenants</h1>
-              </div>
-              <Link href="/admin/speakers/new">
-                <button className="rounded-lg bg-blue-600 px-4 py-2 text-white font-medium hover:bg-blue-700">
-                  + Nouvel intervenant
-                </button>
-              </Link>
-            </div>
-          </div>
-        </header>
+    <div className="min-h-screen bg-background bg-grid relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-[120px]" />
+      </div>
 
-        <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          {loading ? (
-            <SkeletonLoader count={3} />
-          ) : speakers.length === 0 ? (
-            <div className="rounded-lg border border-gray-200 bg-gray-50 p-12 text-center">
-              <p className="text-gray-600">Aucun intervenant</p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {speakers.map((speaker, index) => (
-                <motion.div
-                  key={speaker.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="rounded-lg border border-gray-200 bg-white p-6"
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-blue-600 text-lg font-bold text-white">
-                        {speaker.fullName.charAt(0).toUpperCase()}
-                      </div>
-                      <div>
-                        <h2 className="text-lg font-bold text-gray-900">
-                          {speaker.fullName}
-                        </h2>
-                        <p className="text-sm text-gray-500">
-                          {speaker.sessions?.length || 0} session(s)
-                        </p>
-                      </div>
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+          <div>
+            <Link href="/admin/dashboard" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-emerald-400 transition-colors mb-4">
+              <ArrowLeft className="h-4 w-4" />
+              Tableau de bord
+            </Link>
+            <h1 className="font-heading text-2xl font-bold text-white sm:text-3xl">
+              Intervenants
+            </h1>
+          </div>
+          <Link href="/admin/speakers/new">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="btn-primary flex items-center gap-2 text-sm"
+            >
+              <Plus className="h-4 w-4" />
+              Nouvel intervenant
+            </motion.button>
+          </Link>
+        </div>
+
+        {loading ? (
+          <div className="space-y-4">
+            <SkeletonLoader count={3} type="card" />
+          </div>
+        ) : speakers.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="card-glow rounded-2xl p-12 text-center"
+          >
+            <Users className="mx-auto h-12 w-12 text-slate-600 mb-4" />
+            <p className="text-slate-400">Aucun intervenant</p>
+          </motion.div>
+        ) : (
+          <div className="space-y-4">
+            {speakers.map((speaker, index) => (
+              <motion.div
+                key={speaker.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
+                className="card-glow rounded-xl p-5"
+              >
+                <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500/30 to-emerald-500/30 border border-cyan-500/20 text-lg font-bold text-cyan-400">
+                      {speaker.fullName.charAt(0).toUpperCase()}
                     </div>
-                    <div className="flex gap-2">
-                      <Link href={`/admin/speakers/${speaker.id}/edit`}>
-                        <button className="rounded px-3 py-1 text-sm bg-blue-50 text-blue-600 hover:bg-blue-100">
-                          Éditer
-                        </button>
-                      </Link>
-                      <button
-                        onClick={() => handleDelete(speaker.id)}
-                        disabled={deleting === speaker.id}
-                        className="rounded px-3 py-1 text-sm bg-red-50 text-red-600 hover:bg-red-100 disabled:opacity-50"
-                      >
-                        {deleting === speaker.id ? 'Suppression...' : 'Supprimer'}
-                      </button>
+                    <div>
+                      <h2 className="font-heading text-lg font-bold text-white">
+                        {speaker.fullName}
+                      </h2>
+                      <p className="mt-1 text-sm text-slate-500 flex items-center gap-1.5">
+                        <Mic className="h-3.5 w-3.5 text-emerald-400" />
+                        {speaker.sessions?.length || 0} session(s)
+                      </p>
                     </div>
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          )}
-        </main>
+                  <div className="flex gap-2">
+                    <Link href={`/admin/speakers/${speaker.id}/edit`}>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-1.5 rounded-lg bg-slate-800/50 px-3 py-1.5 text-sm font-medium text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 border border-slate-700/50 transition-colors"
+                      >
+                        <Edit className="h-3.5 w-3.5" />
+                        Éditer
+                      </motion.button>
+                    </Link>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => handleDelete(speaker.id)}
+                      disabled={deleting === speaker.id}
+                      className="flex items-center gap-1.5 rounded-lg bg-slate-800/50 px-3 py-1.5 text-sm font-medium text-slate-400 hover:text-red-400 hover:border-red-500/30 border border-slate-700/50 transition-colors disabled:opacity-50"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                      {deleting === speaker.id ? '...' : 'Supprimer'}
+                    </motion.button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
-    </PageTransition>
+    </div>
   );
 }

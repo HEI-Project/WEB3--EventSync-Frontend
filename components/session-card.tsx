@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { SessionLite } from '@/lib/types';
+import { Users, MapPin, Clock, Star } from 'lucide-react';
 
 interface SessionCardProps {
   session: SessionLite;
@@ -42,14 +43,13 @@ export function SessionCard({
     >
       <Link href={`/sessions/${session.id}`}>
         <motion.div
-          animate={{ scale: isHovered ? 1.02 : 1 }}
-          transition={{ duration: 0.2 }}
-          className="flex h-full flex-col rounded-lg border border-gray-200 bg-white p-4 shadow-sm hover:shadow-md transition-shadow"
+          animate={{ y: isHovered ? -4 : 0 }}
+          className="card-glow flex h-full flex-col rounded-2xl p-5 transition-all duration-300"
         >
           {/* Header with live badge */}
-          <div className="mb-3 flex items-start justify-between">
+          <div className="mb-4 flex items-start justify-between">
             <div className="flex-1">
-              <h3 className="font-semibold text-gray-900 line-clamp-2">
+              <h3 className="font-heading font-semibold text-white line-clamp-2 group-hover:text-cyan-400 transition-colors">
                 {session.title}
               </h3>
             </div>
@@ -57,39 +57,48 @@ export function SessionCard({
               <motion.div
                 animate={{ opacity: [1, 0.7, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="ml-2 flex items-center gap-1.5 rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-600 whitespace-nowrap"
+                className="badge-live ml-3 whitespace-nowrap"
               >
-                <div className="h-2 w-2 rounded-full bg-red-500" />
                 Live
               </motion.div>
             )}
           </div>
 
           {/* Time and room */}
-          <div className="mb-4 space-y-1 text-sm text-gray-600">
-            <p>
-              {formatTime(startTime)} - {formatTime(endTime)}
-            </p>
-            <p className="font-medium text-gray-700">{session.room.name}</p>
+          <div className="mb-4 flex items-center gap-4 text-sm text-slate-500">
+            <div className="flex items-center gap-1.5">
+              <Clock className="h-4 w-4 text-slate-600" />
+              <span>
+                {formatTime(startTime)} - {formatTime(endTime)}
+              </span>
+            </div>
+          </div>
+
+          <div className="mb-4 flex items-center gap-1.5 text-sm">
+            <MapPin className="h-4 w-4 text-cyan-400" />
+            <span className="font-medium text-cyan-400">
+              {session.room?.name || 'Salle TBD'}
+            </span>
           </div>
 
           {/* Speakers */}
           <div className="mb-4 flex-1">
-            <p className="text-xs font-medium text-gray-500 mb-2">
-              INTERVENANTS
+            <p className="mb-2 text-xs font-semibold text-slate-600 uppercase tracking-wider">
+              Intervenants
             </p>
-            <div className="flex flex-wrap gap-1">
-              {session.speakers.slice(0, 2).map((speaker) => (
+            <div className="flex flex-wrap gap-1.5">
+              {session.speakers?.slice(0, 2).map((speaker) => (
                 <span
                   key={speaker.id}
-                  className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700"
+                  className="inline-flex items-center rounded-full bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 text-xs font-medium text-cyan-400"
                 >
+                  <Users className="h-3 w-3 mr-1" />
                   {speaker.fullName}
                 </span>
               ))}
-              {session.speakers.length > 2 && (
-                <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">
-                  +{session.speakers.length - 2}
+              {(session.speakers?.length || 0) > 2 && (
+                <span className="inline-flex items-center rounded-full bg-slate-800 px-3 py-1 text-xs font-medium text-slate-400">
+                  +{(session.speakers?.length || 0) - 2}
                 </span>
               )}
             </div>
@@ -103,13 +112,16 @@ export function SessionCard({
                 onAddFavorite(session.id);
               }}
               aria-label={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
-              className={`self-start text-sm font-medium transition-colors ${
+              className={`self-start inline-flex items-center gap-1.5 text-sm font-medium transition-colors ${
                 isFavorite
-                  ? 'text-amber-500 hover:text-amber-600'
-                  : 'text-gray-400 hover:text-amber-500'
+                  ? 'text-amber-400 hover:text-amber-300'
+                  : 'text-slate-600 hover:text-amber-400'
               }`}
             >
-              {isFavorite ? '★' : '☆'} Favori
+              <Star
+                className={`h-4 w-4 ${isFavorite ? 'fill-amber-400' : ''}`}
+              />
+              {isFavorite ? 'Favori' : 'Ajouter favori'}
             </button>
           )}
         </motion.div>

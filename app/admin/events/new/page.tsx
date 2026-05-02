@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { adminEventsApi } from '@/lib/api/admin-events';
-import { PageTransition } from '@/components/page-transition';
+import { ArrowLeft, Calendar } from 'lucide-react';
 
 export default function NewEventPage() {
   const router = useRouter();
@@ -44,124 +44,136 @@ export default function NewEventPage() {
   };
 
   return (
-    <PageTransition>
-      <div className="min-h-screen bg-white">
-        <header className="border-b border-gray-200 bg-white">
-          <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6 lg:px-8">
-            <Link href="/admin/events" className="text-blue-600 hover:text-blue-800 mb-4 inline-block">
-              ← Retour
-            </Link>
-            <h1 className="text-3xl font-bold text-gray-900">Nouvel événement</h1>
-          </div>
-        </header>
+    <div className="min-h-screen bg-background bg-grid relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[120px]" />
+      </div>
 
-        <main className="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
-          <motion.form
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            onSubmit={handleSubmit}
-            className="rounded-lg border border-gray-200 bg-white p-8"
-          >
-            {error && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="mb-6 rounded-lg bg-red-50 p-4 text-sm text-red-600"
-              >
-                {error}
-              </motion.div>
-            )}
+      <div className="relative mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <Link href="/admin/events" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-cyan-400 transition-colors mb-8">
+          <ArrowLeft className="h-4 w-4" />
+          Événements
+        </Link>
 
-            <div className="space-y-6">
-              <div>
-                <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
-                  Titre *
-                </label>
-                <input
-                  id="title"
-                  type="text"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleChange}
-                  required
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none"
-                />
-              </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
+          <h1 className="font-heading text-2xl font-bold text-white sm:text-3xl">
+            Nouvel <span className="text-gradient">événement</span>
+          </h1>
+        </motion.div>
 
-              <div>
-                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
-                  Description
-                </label>
-                <textarea
-                  id="description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none"
-                  rows={4}
-                />
-              </div>
+        <motion.form
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          onSubmit={handleSubmit}
+          className="card-glow rounded-2xl p-6 sm:p-8"
+        >
+          {error && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="mb-6 rounded-lg border border-red-500/20 bg-red-500/5 px-4 py-3 text-sm text-red-400"
+            >
+              {error}
+            </motion.div>
+          )}
 
-              <div>
-                <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">
-                  Lieu
-                </label>
-                <input
-                  id="location"
-                  type="text"
-                  name="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none"
-                />
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 mb-2">
-                    Date de début *
-                  </label>
-                  <input
-                    id="startDate"
-                    type="datetime-local"
-                    name="startDate"
-                    value={formData.startDate}
-                    onChange={handleChange}
-                    required
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="endDate" className="block text-sm font-medium text-gray-700 mb-2">
-                    Date de fin *
-                  </label>
-                  <input
-                    id="endDate"
-                    type="datetime-local"
-                    name="endDate"
-                    value={formData.endDate}
-                    onChange={handleChange}
-                    required
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none"
-                  />
-                </div>
-              </div>
+          <div className="space-y-6">
+            <div>
+              <label htmlFor="title" className="block text-sm font-medium text-slate-300 mb-1.5">
+                Titre *
+              </label>
+              <input
+                id="title"
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                placeholder="Nom de l'événement"
+                required
+                className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm text-white placeholder:text-slate-600 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-colors"
+              />
             </div>
 
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit"
-              disabled={submitting}
-              className="mt-8 w-full rounded-lg bg-blue-600 py-2 text-white font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              {submitting ? 'Création...' : 'Créer'}
-            </motion.button>
-          </motion.form>
-        </main>
+            <div>
+              <label htmlFor="description" className="block text-sm font-medium text-slate-300 mb-1.5">
+                Description
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Description de l'événement"
+                rows={4}
+                className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm text-white placeholder:text-slate-600 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-colors"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="location" className="block text-sm font-medium text-slate-300 mb-1.5">
+                Lieu
+              </label>
+              <input
+                id="location"
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                placeholder="Adresse ou lieu"
+                className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm text-white placeholder:text-slate-600 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-colors"
+              />
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label htmlFor="startDate" className="block text-sm font-medium text-slate-300 mb-1.5">
+                  Date de début *
+                </label>
+                <input
+                  id="startDate"
+                  type="datetime-local"
+                  name="startDate"
+                  value={formData.startDate}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm text-white focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-colors"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="endDate" className="block text-sm font-medium text-slate-300 mb-1.5">
+                  Date de fin *
+                </label>
+                <input
+                  id="endDate"
+                  type="datetime-local"
+                  name="endDate"
+                  value={formData.endDate}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm text-white focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500/20 transition-colors"
+                />
+              </div>
+            </div>
+          </div>
+
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            type="submit"
+            disabled={submitting}
+            className="btn-primary mt-8 w-full py-2.5 text-sm flex items-center justify-center gap-2"
+          >
+            <Calendar className="h-4 w-4" />
+            {submitting ? 'Création...' : 'Créer'}
+          </motion.button>
+        </motion.form>
       </div>
-    </PageTransition>
+    </div>
   );
 }

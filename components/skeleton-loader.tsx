@@ -1,7 +1,5 @@
 'use client';
 
-import React from 'react';
-
 interface SkeletonLoaderProps {
   count?: number;
   type?: 'card' | 'text' | 'line';
@@ -17,7 +15,10 @@ export function SkeletonLoader({
     return (
       <div className={className}>
         {Array.from({ length: count }).map((_, i) => (
-          <div key={i} className="mb-2 h-4 w-3/4 animate-shimmer rounded" />
+          <div
+            key={i}
+            className="mb-2 h-4 w-3/4 animate-pulse rounded-lg bg-slate-800"
+          />
         ))}
       </div>
     );
@@ -27,7 +28,10 @@ export function SkeletonLoader({
     return (
       <div className={className}>
         {Array.from({ length: count }).map((_, i) => (
-          <div key={i} className="mb-3 h-2 w-full animate-shimmer rounded" />
+          <div
+            key={i}
+            className="mb-3 h-2 w-full animate-pulse rounded bg-slate-800"
+          />
         ))}
       </div>
     );
@@ -38,7 +42,7 @@ export function SkeletonLoader({
       {Array.from({ length: count }).map((_, i) => (
         <div
           key={i}
-          className="mb-4 h-40 w-full animate-shimmer rounded-lg border border-gray-100"
+          className="mb-4 h-48 w-full animate-pulse rounded-2xl bg-slate-800/50 border border-slate-800"
         />
       ))}
     </div>
