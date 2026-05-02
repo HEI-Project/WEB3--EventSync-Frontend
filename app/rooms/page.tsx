@@ -24,7 +24,7 @@ export default function RoomsPage() {
     roomsApi
       .list()
       .then((data) => setRooms(data))
-      .catch((err) => console.error('[v0] Error loading rooms:', err))
+      .catch((err) => console.error('Error loading rooms:', err))
       .finally(() => setLoading(false));
   }, []);
 
@@ -36,8 +36,8 @@ export default function RoomsPage() {
     <div className="min-h-screen bg-background bg-grid">
       {/* Background glow */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[120px]" />
-        <div className="absolute right-1/4 top-1/3 h-[300px] w-[400px] rounded-full bg-violet-500/8 blur-[100px]" />
+        <div className="absolute left-1/2 top-0 h-125 w-200 -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[120px]" />
+        <div className="absolute right-1/4 top-1/3 h-75 w-100 rounded-full bg-violet-500/8 blur-[100px]" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-24 pb-16 lg:pt-32">
@@ -132,7 +132,7 @@ export default function RoomsPage() {
               {displayedRoom ? (
                 <>
                   <div className="mb-6 flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500/20 to-violet-500/20 border border-cyan-500/20">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-br from-cyan-500/20 to-violet-500/20 border border-cyan-500/20">
                       <MapPin className="h-5 w-5 text-cyan-400" />
                     </div>
                     <h2 className="font-heading text-xl font-bold text-white">

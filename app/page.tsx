@@ -34,8 +34,8 @@ export default function HomePage() {
       <section className="relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-24">
         {/* Background glow */}
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[120px]" />
-          <div className="absolute left-1/4 top-1/4 h-[300px] w-[400px] rounded-full bg-violet-500/8 blur-[100px]" />
+          <div className="absolute left-1/2 top-0 h-125 w-200 -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[120px]" />
+          <div className="absolute left-1/4 top-1/4 h-75 w-100 rounded-full bg-violet-500/8 blur-[100px]" />
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -161,7 +161,7 @@ export default function HomePage() {
                       className="card-glow group h-full rounded-2xl p-6 transition-all duration-300"
                     >
                       <div className="mb-4 flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500/20 to-violet-500/20 border border-cyan-500/20">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-br from-cyan-500/20 to-violet-500/20 border border-cyan-500/20">
                           <CalendarDays className="h-5 w-5 text-cyan-400" />
                         </div>
                         <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">
@@ -219,7 +219,7 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="relative overflow-hidden rounded-3xl border border-cyan-500/20 bg-gradient-to-br from-slate-900/80 to-violet-900/30 p-8 sm:p-12 lg:p-16"
+            className="relative overflow-hidden rounded-3xl border border-cyan-500/20 bg-linear-to-br from-slate-900/80 to-violet-900/30 p-8 sm:p-12 lg:p-16"
           >
             <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 rounded-full bg-cyan-500/10 blur-[80px]" />
 
@@ -263,7 +263,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div className="flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-cyan-400 to-violet-500">
+              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-linear-to-br from-cyan-400 to-violet-500">
                 <Zap className="h-4 w-4 text-black" />
               </div>
               <span className="font-heading text-sm font-bold text-white">

@@ -40,7 +40,7 @@ export default function AdminDashboardPage() {
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminUser');
-    router.push('/admin/login');
+    router.push('/');
   };
 
   if (loading) return (
@@ -112,7 +112,7 @@ export default function AdminDashboardPage() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleLogout}
-            className="flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-800/50 px-4 py-2 text-sm font-medium text-slate-400 hover:border-red-500/30 hover:text-red-400 transition-colors"
+            className="flex items-center cursor-pointer gap-2 rounded-lg border border-slate-700 bg-slate-800/50 px-4 py-2 text-sm font-medium text-slate-400 hover:border-red-500/30 hover:text-red-400 transition-colors"
           >
             <LogOut className="h-4 w-4" />
             Déconnexion
