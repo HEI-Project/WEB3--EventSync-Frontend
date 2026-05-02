@@ -83,7 +83,7 @@ export default function EventDetailPage() {
       {/* Header */}
       <section className="relative pt-24 pb-8 lg:pt-32 lg:pb-12">
         <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/2 top-0 h-[400px] w-[600px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[120px]" />
+          <div className="absolute left-1/2 top-0 h-100 w-150 -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[120px]" />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Link href="/" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-cyan-400 transition-colors mb-6">

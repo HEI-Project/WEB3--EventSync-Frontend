@@ -13,6 +13,8 @@ export default function AdminEventsPage() {
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
 
+  
+
   useEffect(() => {
     loadEvents();
   }, []);
@@ -21,7 +23,7 @@ export default function AdminEventsPage() {
     try {
       const token = localStorage.getItem('adminToken');
       if (!token) throw new Error('No token');
-      const data = await adminEventsApi.list(token);
+      const data = await adminEventsApi.list();
       setEvents(data);
     } catch (err) {
       console.error('[v0] Error loading events:', err);
@@ -50,7 +52,7 @@ export default function AdminEventsPage() {
   return (
     <div className="min-h-screen bg-background bg-grid relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[120px]" />
+        <div className="absolute left-1/2 top-0 h-125 w-200 -translate-x-1/2 rounded-full bg-cyan-500/10 blur-[120px]" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 lg:py-12">

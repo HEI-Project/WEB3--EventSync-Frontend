@@ -1,5 +1,5 @@
 import { apiCall } from './client';
-import type { Speaker } from '@/lib/types';
+import type { Speaker, SpeakerLite } from '@/lib/types';
 
 interface CreateSpeakerData {
   fullName: string;
@@ -9,10 +9,8 @@ interface CreateSpeakerData {
 }
 
 export const adminSpeakersApi = {
-  list: (token: string) =>
-    apiCall<Speaker[]>('/admin/speakers', {
-      headers: { Authorization: `Bearer ${token}` },
-    }),
+  list: () => apiCall<Speaker[]>('/speakers'),
+  get: (id: string) => apiCall<Speaker>(`/speakers/${id}`),
   create: (data: CreateSpeakerData, token: string) =>
     apiCall<Speaker>('/admin/speakers', {
       method: 'POST',

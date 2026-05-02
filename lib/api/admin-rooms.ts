@@ -10,10 +10,7 @@ interface RoomWithSessions extends Room {
 }
 
 export const adminRoomsApi = {
-  list: (token: string) =>
-    apiCall<RoomWithSessions[]>('/admin/rooms', {
-      headers: { Authorization: `Bearer ${token}` },
-    }),
+  list: () => apiCall<RoomWithSessions[]>('/rooms'),
   create: (data: CreateRoomData, token: string) =>
     apiCall<Room>('/admin/rooms', {
       method: 'POST',

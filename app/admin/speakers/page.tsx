@@ -21,7 +21,7 @@ export default function AdminSpeakersPage() {
     try {
       const token = localStorage.getItem('adminToken');
       if (!token) throw new Error('No token');
-      const data = await adminSpeakersApi.list(token);
+      const data = await adminSpeakersApi.list();
       setSpeakers(data);
     } catch (err) {
       console.error('[v0] Error loading speakers:', err);
