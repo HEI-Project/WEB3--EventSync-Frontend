@@ -13,10 +13,8 @@ interface CreateSessionData {
 }
 
 export const adminSessionsApi = {
-  list: (token: string) =>
-    apiCall<Session[]>('/admin/sessions', {
-      headers: { Authorization: `Bearer ${token}` },
-    }),
+  list: () => apiCall<Session>(`/sessions/`),
+    
   create: (data: CreateSessionData, token: string) =>
     apiCall<Session>('/admin/sessions', {
       method: 'POST',

@@ -21,14 +21,17 @@ export default function AdminSessionsPage() {
     try {
       const token = localStorage.getItem('adminToken');
       if (!token) throw new Error('No token');
-      const data = await adminSessionsApi.list(token);
-      setSessions(data);
+      const data = await adminSessionsApi.list();
+      setSessions([data]);
     } catch (err) {
       console.error('[v0] Error loading sessions:', err);
     } finally {
       setLoading(false);
     }
   };
+
+  console.log(sessions);
+  
 
   const handleDelete = async (id: string) => {
     if (!confirm('Êtes-vous sûr?')) return;
@@ -50,7 +53,7 @@ export default function AdminSessionsPage() {
   return (
     <div className="min-h-screen bg-background bg-grid relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-violet-500/10 blur-[120px]" />
+        <div className="absolute left-1/2 top-0 h-125 w-200 -translate-x-1/2 rounded-full bg-violet-500/10 blur-[120px]" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 lg:py-12">

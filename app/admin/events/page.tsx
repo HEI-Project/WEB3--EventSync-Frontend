@@ -4,14 +4,17 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { adminEventsApi } from '@/lib/api/admin-events';
-import { Event } from '@/lib/types';
+import { Event, Session } from '@/lib/types';
 import { SkeletonLoader } from '@/components/skeleton-loader';
 import { ArrowLeft, Calendar, Plus, Trash2, Edit, MapPin } from 'lucide-react';
+import { adminSessionsApi } from '@/lib/api';
 
 export default function AdminEventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
+  
+    const [sessions, setSessions] = useState<Session[]>([]);
 
   
 
@@ -48,6 +51,29 @@ export default function AdminEventsPage() {
       setDeleting(null);
     }
   };
+
+  
+    useEffect(() => {
+      loadSessions();
+    }, []);
+  
+    const loadSessions = async () => {
+      try {
+        const token = localStorage.getItem('adminToken');
+        if (!token) throw new Error('No token');
+        const data = await adminSessionsApi.list();
+        setSessions([data]);
+      } catch (err) {
+        console.error('Error loading sessions:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+  console.log(events);
+  console.log(sessions);
+  
+  
 
   return (
     <div className="min-h-screen bg-background bg-grid relative overflow-hidden">
