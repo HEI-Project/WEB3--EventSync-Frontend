@@ -10,7 +10,8 @@ import { adminRoomsApi } from '@/lib/api/admin-rooms';
 import { adminSpeakersApi } from '@/lib/api/admin-speakers';
 import { sessionsApi } from '@/lib/api/sessions';
 import type { Event, Room, Speaker } from '@/lib/types';
-import { ArrowLeft, Mic } from 'lucide-react';
+import { SpeakerSelectModal } from '@/components/speaker-select-modal';
+import { ArrowLeft, Mic, Users } from 'lucide-react';
 
 export default function EditSessionPage() {
   const router = useRouter();
@@ -33,6 +34,7 @@ export default function EditSessionPage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [speakerModalOpen, setSpeakerModalOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
@@ -286,27 +288,54 @@ export default function EditSessionPage() {
                 <label className="block text-sm font-medium text-slate-300 mb-1.5">
                   Intervenants
                 </label>
-                <div className="max-h-40 overflow-y-auto rounded-lg border border-slate-700 bg-slate-900/50 p-2 space-y-1">
-                  {speakers.length === 0 ? (
-                    <p className="text-xs text-slate-500 px-2 py-1">Aucun intervenant</p>
+                <div className="rounded-lg border border-slate-700 bg-slate-900/50 p-3 min-h-[2.75rem]">
+                  {formData.speakerIds.length > 0 ? (
+                    <div className="flex flex-wrap gap-1.5 mb-2">
+                      {formData.speakerIds.map((id) => {
+                        const speaker = speakers.find((s) => s.id === id);
+                        return speaker ? (
+                          <span
+                            key={id}
+                            className="inline-flex items-center gap-1 rounded-full bg-violet-500/15 border border-violet-500/20 px-2.5 py-0.5 text-xs font-medium text-violet-400"
+                          >
+                            {speaker.fullName}
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleSpeakerToggle(id);
+                              }}
+                              className="hover:text-violet-300 transition-colors"
+                            >
+                              <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                              </svg>
+                            </button>
+                          </span>
+                        ) : null;
+                      })}
+                    </div>
                   ) : (
-                    speakers.map((speaker) => (
-                      <label
-                        key={speaker.id}
-                        className="flex items-center gap-2 rounded-md px-2 py-1.5 cursor-pointer hover:bg-violet-500/10 transition-colors"
-                      >
-                        <input
-                          type="checkbox"
-                          checked={formData.speakerIds.includes(speaker.id)}
-                          onChange={() => handleSpeakerToggle(speaker.id)}
-                          className="rounded border-slate-600 bg-slate-800 text-violet-500 focus:ring-violet-500/20 focus:ring-offset-0"
-                        />
-                        <span className="text-sm text-slate-300">{speaker.fullName}</span>
-                      </label>
-                    ))
+                    <p className="text-xs text-slate-500 mb-2">Aucun intervenant sélectionné</p>
                   )}
+                  <button
+                    type="button"
+                    onClick={() => setSpeakerModalOpen(true)}
+                    className="inline-flex items-center gap-1.5 rounded-md border border-dashed border-slate-600 px-3 py-1.5 text-xs font-medium text-slate-400 hover:border-violet-500/40 hover:text-violet-400 hover:bg-violet-500/5 transition-all"
+                  >
+                    <Users className="h-3.5 w-3.5" />
+                    {formData.speakerIds.length > 0 ? 'Modifier la sélection' : 'Ajouter des intervenants'}
+                  </button>
                 </div>
               </div>
+
+            <SpeakerSelectModal
+              open={speakerModalOpen}
+              speakers={speakers}
+              selectedIds={formData.speakerIds}
+              onClose={() => setSpeakerModalOpen(false)}
+              onConfirm={(ids) => setFormData((prev) => ({ ...prev, speakerIds: ids }))}
+            />
             </div>
           </div>
 
