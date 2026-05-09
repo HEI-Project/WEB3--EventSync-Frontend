@@ -27,7 +27,7 @@ export default function EditRoomPage() {
     }
 
     adminRoomsApi
-      .list(token)
+      .list()
       .then((rooms) => {
         const room = rooms.find((r) => r.id === roomId);
         if (room) {

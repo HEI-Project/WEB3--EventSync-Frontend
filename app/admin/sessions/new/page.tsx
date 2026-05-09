@@ -1,10 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { adminSessionsApi } from '@/lib/api/admin-sessions';
+import { adminEventsApi } from '@/lib/api/admin-events';
+import { adminRoomsApi } from '@/lib/api/admin-rooms';
+import { adminSpeakersApi } from '@/lib/api/admin-speakers';
+import type { Event, Room, Speaker } from '@/lib/types';
 import { ArrowLeft, Mic } from 'lucide-react';
 
 export default function NewSessionPage() {
@@ -17,14 +21,45 @@ export default function NewSessionPage() {
     capacity: '100',
     eventId: '',
     roomId: '',
-    speakerIds: '',
+    speakerIds: [] as string[],
   });
+  const [events, setEvents] = useState<Event[]>([]);
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [speakers, setSpeakers] = useState<Speaker[]>([]);
+  const [loadingData, setLoadingData] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) return;
+
+    Promise.all([
+      adminEventsApi.list(),
+      adminRoomsApi.list(),
+      adminSpeakersApi.list(),
+    ])
+      .then(([eventsData, roomsData, speakersData]) => {
+        setEvents(eventsData);
+        setRooms(roomsData);
+        setSpeakers(speakersData);
+      })
+      .catch((err) => console.error('[v0] Error loading form data:', err))
+      .finally(() => setLoadingData(false));
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSpeakerToggle = (id: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      speakerIds: prev.speakerIds.includes(id)
+        ? prev.speakerIds.filter((s) => s !== id)
+        : [...prev.speakerIds, id],
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -45,9 +80,7 @@ export default function NewSessionPage() {
           capacity: parseInt(formData.capacity, 10),
           eventId: formData.eventId,
           roomId: formData.roomId,
-          speakerIds: formData.speakerIds
-            ? formData.speakerIds.split(',').map((id) => id.trim()).filter(Boolean)
-            : [],
+          speakerIds: formData.speakerIds,
         },
         token
       );
@@ -182,51 +215,76 @@ export default function NewSessionPage() {
 
               <div>
                 <label htmlFor="eventId" className="block text-sm font-medium text-slate-300 mb-1.5">
-                  ID de l'événement *
+                  Événement *
                 </label>
-                <input
+                <select
                   id="eventId"
-                  type="text"
                   name="eventId"
                   value={formData.eventId}
                   onChange={handleChange}
-                  placeholder="event-uuid"
                   required
-                  className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm text-white placeholder:text-slate-600 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500/20 transition-colors"
-                />
+                  disabled={loadingData}
+                  className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm text-white focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500/20 transition-colors disabled:opacity-50"
+                >
+                  <option value="" className="bg-slate-900">Sélectionner un événement</option>
+                  {events.map((event) => (
+                    <option key={event.id} value={event.id} className="bg-slate-900">
+                      {event.title}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <label htmlFor="roomId" className="block text-sm font-medium text-slate-300 mb-1.5">
-                  ID de la salle *
+                  Salle *
                 </label>
-                <input
+                <select
                   id="roomId"
-                  type="text"
                   name="roomId"
                   value={formData.roomId}
                   onChange={handleChange}
-                  placeholder="room-uuid"
                   required
-                  className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm text-white placeholder:text-slate-600 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500/20 transition-colors"
-                />
+                  disabled={loadingData}
+                  className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm text-white focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500/20 transition-colors disabled:opacity-50"
+                >
+                  <option value="" className="bg-slate-900">Sélectionner une salle</option>
+                  {rooms.map((room) => (
+                    <option key={room.id} value={room.id} className="bg-slate-900">
+                      {room.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div>
-                <label htmlFor="speakerIds" className="block text-sm font-medium text-slate-300 mb-1.5">
-                  IDs des intervenants
+                <label className="block text-sm font-medium text-slate-300 mb-1.5">
+                  Intervenants
                 </label>
-                <input
-                  id="speakerIds"
-                  type="text"
-                  name="speakerIds"
-                  value={formData.speakerIds}
-                  onChange={handleChange}
-                  placeholder="uuid-1, uuid-2"
-                  className="w-full rounded-lg border border-slate-700 bg-slate-900/50 px-4 py-2.5 text-sm text-white placeholder:text-slate-600 focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500/20 transition-colors"
-                />
+                <div className="max-h-40 overflow-y-auto rounded-lg border border-slate-700 bg-slate-900/50 p-2 space-y-1">
+                  {loadingData ? (
+                    <p className="text-xs text-slate-500 px-2 py-1">Chargement...</p>
+                  ) : speakers.length === 0 ? (
+                    <p className="text-xs text-slate-500 px-2 py-1">Aucun intervenant</p>
+                  ) : (
+                    speakers.map((speaker) => (
+                      <label
+                        key={speaker.id}
+                        className="flex items-center gap-2 rounded-md px-2 py-1.5 cursor-pointer hover:bg-violet-500/10 transition-colors"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={formData.speakerIds.includes(speaker.id)}
+                          onChange={() => handleSpeakerToggle(speaker.id)}
+                          className="rounded border-slate-600 bg-slate-800 text-violet-500 focus:ring-violet-500/20 focus:ring-offset-0"
+                        />
+                        <span className="text-sm text-slate-300">{speaker.fullName}</span>
+                      </label>
+                    ))
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -235,7 +293,7 @@ export default function NewSessionPage() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             type="submit"
-            disabled={submitting || !formData.title || !formData.startTime || !formData.endTime}
+            disabled={submitting || !formData.title || !formData.startTime || !formData.endTime || !formData.eventId || !formData.roomId}
             className="btn-primary mt-8 w-full py-2.5 text-sm flex items-center justify-center gap-2"
           >
             <Mic className="h-4 w-4" />
