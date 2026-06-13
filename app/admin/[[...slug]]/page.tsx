@@ -11,6 +11,7 @@ import { EventList, EventEdit, EventCreate } from './events';
 import { SessionList, SessionEdit, SessionCreate } from './sessions';
 import { SpeakerList, SpeakerEdit, SpeakerCreate } from './speakers';
 import { RoomList, RoomEdit, RoomCreate } from './rooms';
+import { EventShow, SessionShow } from './show';
 import { AdminDashboard } from './dashboard';
 import { MyLayout } from './admin-layout';
 import { adminTheme } from './theme';
@@ -41,7 +42,7 @@ export default function AdminPage() {
           list={EventList}
           edit={EventEdit}
           create={EventCreate}
-          show={ShowGuesser}
+          show={EventShow}
           options={{ label: 'Événements' }}
         />
         <Resource
@@ -49,7 +50,7 @@ export default function AdminPage() {
           list={SessionList}
           edit={SessionEdit}
           create={SessionCreate}
-          show={ShowGuesser}
+          show={SessionShow}
           options={{ label: 'Sessions' }}
         />
         <Resource
