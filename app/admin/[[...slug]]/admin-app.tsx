@@ -33,6 +33,7 @@ export default function AdminApp() {
       layout={MyLayout}
       dashboard={AdminDashboard}
       theme={adminTheme}
+      basename="/admin"
     >
       <Resource
         name="events"
