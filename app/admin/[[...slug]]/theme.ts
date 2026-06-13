@@ -96,7 +96,6 @@ export const adminTheme = createTheme({
     RaList: {
       styleOverrides: {
         root: {
-          position: 'relative',
           '& .RaList-content': {
             background: 'transparent',
             boxShadow: 'none',
@@ -119,7 +118,6 @@ export const adminTheme = createTheme({
     RaDatagrid: {
       styleOverrides: {
         root: {
-          position: 'relative',
           '& .RaDatagrid-headerRow th': {
             background: '#0f1322',
             fontWeight: 600,
