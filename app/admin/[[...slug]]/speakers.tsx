@@ -10,6 +10,7 @@ import {
   ImageField,
   required,
 } from 'react-admin';
+import { SaveDeleteToolbar } from './components';
 
 export const SpeakerList = () => (
   <List>
@@ -22,7 +23,7 @@ export const SpeakerList = () => (
 );
 
 const SpeakerForm = () => (
-  <SimpleForm>
+  <SimpleForm toolbar={<SaveDeleteToolbar />}>
     <TextInput source="fullName" label="Nom complet" validate={required()} fullWidth />
     <TextInput source="photoUrl" label="URL de la photo" fullWidth />
     <ImageField source="photoUrl" label="Aperçu" />

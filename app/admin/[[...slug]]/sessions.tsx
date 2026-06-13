@@ -5,9 +5,6 @@ import {
   DateField,
   NumberField,
   ReferenceField,
-  ReferenceArrayField,
-  SingleFieldList,
-  ChipField,
   Edit,
   Create,
   SimpleForm,
@@ -18,6 +15,7 @@ import {
   SelectInput,
   required,
 } from 'react-admin';
+import { SaveDeleteToolbar } from './components';
 
 export const SessionList = () => (
   <List>
@@ -37,7 +35,7 @@ export const SessionList = () => (
 );
 
 const SessionForm = () => (
-  <SimpleForm>
+  <SimpleForm toolbar={<SaveDeleteToolbar />}>
     <TextInput source="title" label="Titre" validate={required()} fullWidth />
     <TextInput source="description" label="Description" multiline rows={4} fullWidth />
     <DateTimeInput source="startTime" label="Heure de début" validate={required()} />

@@ -9,6 +9,7 @@ import {
   TextInput,
   required,
 } from 'react-admin';
+import { SaveDeleteToolbar } from './components';
 
 export const RoomList = () => (
   <List>
@@ -20,7 +21,7 @@ export const RoomList = () => (
 );
 
 const RoomForm = () => (
-  <SimpleForm>
+  <SimpleForm toolbar={<SaveDeleteToolbar />}>
     <TextInput source="name" label="Nom de la salle" validate={required()} fullWidth />
   </SimpleForm>
 );

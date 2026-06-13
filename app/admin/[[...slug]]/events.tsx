@@ -11,6 +11,7 @@ import {
   DateTimeInput,
   required,
 } from 'react-admin';
+import { SaveDeleteToolbar } from './components';
 
 export const EventList = () => (
   <List>
@@ -25,7 +26,7 @@ export const EventList = () => (
 );
 
 const EventForm = () => (
-  <SimpleForm>
+  <SimpleForm toolbar={<SaveDeleteToolbar />}>
     <TextInput source="title" label="Titre" validate={required()} fullWidth />
     <TextInput source="description" label="Description" multiline rows={4} fullWidth />
     <TextInput source="location" label="Lieu" fullWidth />
