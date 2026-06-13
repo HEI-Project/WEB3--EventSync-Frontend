@@ -3,8 +3,8 @@ import { authApi } from './auth';
 const isBrowser = typeof window !== 'undefined';
 
 export const authProvider = {
-  login: async ({ username, password }: { username: string; password: string }) => {
-    const response = await authApi.login(username, password);
+  login: async ({ email, password }: { email: string; password: string }) => {
+    const response = await authApi.login(email, password);
     if (isBrowser) {
       localStorage.setItem('adminToken', response.token);
       localStorage.setItem('adminUser', JSON.stringify(response.user));
