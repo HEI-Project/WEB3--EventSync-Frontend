@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { Admin, Resource, ShowGuesser } from 'react-admin';
+import { Admin, Resource } from 'react-admin';
 import { dataProvider } from '@/lib/api/data-provider';
 import { authProvider } from '@/lib/api/auth-provider';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
@@ -12,8 +12,11 @@ import { SessionList, SessionEdit, SessionCreate } from './sessions';
 import { SpeakerList, SpeakerEdit, SpeakerCreate } from './speakers';
 import { RoomList, RoomEdit, RoomCreate } from './rooms';
 import { EventShow, SessionShow } from './show';
+import { SpeakerShow } from './speakers';
+import { RoomShow } from './rooms';
 import { AdminDashboard } from './dashboard';
 import { MyLayout } from './admin-layout';
+import { LoginPage } from './login';
 import { adminTheme } from './theme';
 
 const i18nProvider = polyglotI18nProvider(() => frenchMessages, 'fr');
@@ -33,6 +36,7 @@ export default function AdminPage() {
         dataProvider={dataProvider}
         authProvider={authProvider}
         i18nProvider={i18nProvider}
+        loginPage={LoginPage}
         layout={MyLayout}
         dashboard={AdminDashboard}
         theme={adminTheme}
@@ -58,7 +62,7 @@ export default function AdminPage() {
           list={SpeakerList}
           edit={SpeakerEdit}
           create={SpeakerCreate}
-          show={ShowGuesser}
+          show={SpeakerShow}
           options={{ label: 'Intervenants' }}
         />
         <Resource
@@ -66,7 +70,7 @@ export default function AdminPage() {
           list={RoomList}
           edit={RoomEdit}
           create={RoomCreate}
-          show={ShowGuesser}
+          show={RoomShow}
           options={{ label: 'Salles' }}
         />
       </Admin>
