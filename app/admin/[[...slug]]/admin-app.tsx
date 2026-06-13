@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Admin, Resource, ShowGuesser } from 'react-admin';
 import { dataProvider } from '@/lib/api/data-provider';
 import { authProvider } from '@/lib/api/auth-provider';
@@ -16,6 +17,14 @@ import { adminTheme } from './theme';
 const i18nProvider = polyglotI18nProvider(() => frenchMessages, 'fr');
 
 export default function AdminApp() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <Admin
       dataProvider={dataProvider}
@@ -24,7 +33,6 @@ export default function AdminApp() {
       layout={MyLayout}
       dashboard={AdminDashboard}
       theme={adminTheme}
-      basename="/admin"
     >
       <Resource
         name="events"
