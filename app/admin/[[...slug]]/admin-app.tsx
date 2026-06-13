@@ -20,8 +20,10 @@ export default function AdminApp() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const id = setTimeout(() => setReady(true), 100);
-    return () => clearTimeout(id);
+    if (!window.location.pathname.startsWith('/admin')) {
+      window.history.replaceState(null, '', '/admin');
+    }
+    requestAnimationFrame(() => setReady(true));
   }, []);
 
   if (!ready) return null;
