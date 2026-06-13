@@ -17,13 +17,14 @@ import { adminTheme } from './theme';
 const i18nProvider = polyglotI18nProvider(() => frenchMessages, 'fr');
 
 export default function AdminApp() {
-  const [mounted, setMounted] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const id = setTimeout(() => setReady(true), 100);
+    return () => clearTimeout(id);
   }, []);
 
-  if (!mounted) return null;
+  if (!ready) return null;
 
   return (
     <Admin
