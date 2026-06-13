@@ -101,6 +101,8 @@ export const adminTheme = createTheme({
             boxShadow: 'none',
             border: '1px solid rgba(148, 163, 184, 0.08)',
             borderRadius: 12,
+            position: 'relative',
+            marginTop: '8px',
           },
           '& .RaList-header': {
             padding: '16px 24px',
