@@ -55,9 +55,12 @@ export default function EventDetailPage() {
     return new Date(session.startTime) <= now && now <= new Date(session.endTime);
   };
 
-  const rooms = event
-    ? Array.from(new Set(event.sessions?.map((s) => s.room?.name).filter(Boolean)))
-    : [];
+const rooms = Array.isArray(event?.sessions)
+  ? [...new Set(event.sessions
+      .map((s) => s?.room?.name)
+      .filter(Boolean)
+    )]
+  : [];
 
   const filteredSessions = event
     ? selectedRoom
