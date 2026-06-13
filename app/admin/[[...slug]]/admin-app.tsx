@@ -20,10 +20,7 @@ export default function AdminApp() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (!window.location.pathname.startsWith('/admin')) {
-      window.history.replaceState(null, '', '/admin');
-    }
-    requestAnimationFrame(() => setReady(true));
+    setReady(true);
   }, []);
 
   if (!ready) return null;
@@ -36,7 +33,6 @@ export default function AdminApp() {
       layout={MyLayout}
       dashboard={AdminDashboard}
       theme={adminTheme}
-      basename="/admin"
     >
       <Resource
         name="events"
