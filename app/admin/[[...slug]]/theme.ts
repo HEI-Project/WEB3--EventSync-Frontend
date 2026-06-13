@@ -96,12 +96,12 @@ export const adminTheme = createTheme({
     RaList: {
       styleOverrides: {
         root: {
+          position: 'relative',
           '& .RaList-content': {
             background: 'transparent',
             boxShadow: 'none',
             border: '1px solid rgba(148, 163, 184, 0.08)',
             borderRadius: 12,
-            overflow: 'hidden',
           },
           '& .RaList-header': {
             padding: '16px 24px',
@@ -119,6 +119,7 @@ export const adminTheme = createTheme({
     RaDatagrid: {
       styleOverrides: {
         root: {
+          position: 'relative',
           '& .RaDatagrid-headerRow th': {
             background: '#0f1322',
             fontWeight: 600,
@@ -145,6 +146,27 @@ export const adminTheme = createTheme({
           '& .RaDatagrid-empty': {
             padding: '48px 16px',
             color: '#8896b0',
+          },
+        },
+      },
+    },
+    RaBulkActionsToolbar: {
+      styleOverrides: {
+        root: {
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          background: '#0f1322 !important',
+          borderBottom: '1px solid rgba(34, 211, 238, 0.2)',
+          padding: '8px 16px',
+          minHeight: 44,
+          boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
+          animation: 'slideDown 150ms ease-out',
+          '@keyframes slideDown': {
+            from: { opacity: 0, transform: 'translateY(-4px)' },
+            to: { opacity: 1, transform: 'translateY(0)' },
           },
         },
       },
