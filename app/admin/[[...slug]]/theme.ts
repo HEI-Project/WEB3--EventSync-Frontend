@@ -152,22 +152,9 @@ export const adminTheme = createTheme({
     },
     RaBulkActionsToolbar: {
       styleOverrides: {
-        root: {
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
-          background: '#0f1322 !important',
-          borderBottom: '1px solid rgba(34, 211, 238, 0.2)',
-          padding: '8px 16px',
-          minHeight: 44,
-          boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
-          animation: 'slideDown 150ms ease-out',
-          '@keyframes slideDown': {
-            from: { opacity: 0, transform: 'translateY(-4px)' },
-            to: { opacity: 1, transform: 'translateY(0)' },
-          },
+        toolbar: {
+          background: '#1a1f35 !important',
+          borderBottom: '1px solid rgba(34, 211, 238, 0.15)',
         },
       },
     },
