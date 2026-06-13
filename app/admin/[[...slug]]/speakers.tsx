@@ -22,13 +22,13 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Avatar from '@mui/material/Avatar';
 import Link from '@mui/material/Link';
-import { SaveDeleteToolbar } from './components';
+import { SaveDeleteToolbar, BulkActionButtons } from './components';
 
 const SpeakerFilters = [<FilterLiveSearch source="fullName" key="q" />];
 
 export const SpeakerList = () => (
   <List filters={SpeakerFilters}>
-    <Datagrid rowClick="edit">
+    <Datagrid rowClick="edit" bulkActionButtons={<BulkActionButtons />}>
       <ImageField
         source="photoUrl"
         label="Photo"

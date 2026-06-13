@@ -16,7 +16,7 @@ import {
 } from 'react-admin';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { SaveDeleteToolbar } from './components';
+import { SaveDeleteToolbar, BulkActionButtons } from './components';
 
 const EventFilters = [
   <FilterLiveSearch source="title" key="q" />,
@@ -29,6 +29,7 @@ export const EventList = () => (
   >
     <Datagrid
       rowClick="edit"
+      bulkActionButtons={<BulkActionButtons />}
       sx={{
         '& .RaDatagrid-dataRow td:first-of-type': {
           fontWeight: 500,

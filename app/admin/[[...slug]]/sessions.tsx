@@ -17,7 +17,7 @@ import {
   FilterLiveSearch,
 } from 'react-admin';
 import Box from '@mui/material/Box';
-import { SaveDeleteToolbar } from './components';
+import { SaveDeleteToolbar, BulkActionButtons } from './components';
 
 const SessionFilters = [
   <FilterLiveSearch source="title" key="q" />,
@@ -34,7 +34,7 @@ export const SessionList = () => (
     filters={SessionFilters}
     sort={{ field: 'startTime', order: 'ASC' }}
   >
-    <Datagrid rowClick="edit">
+    <Datagrid rowClick="edit" bulkActionButtons={<BulkActionButtons />}>
       <TextField source="title" label="Titre" />
       <ReferenceField source="eventId" reference="events" label="Événement">
         <TextField source="title" />

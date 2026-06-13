@@ -17,11 +17,11 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { SaveDeleteToolbar } from './components';
+import { SaveDeleteToolbar, BulkActionButtons } from './components';
 
 export const RoomList = () => (
   <List>
-    <Datagrid rowClick="edit">
+    <Datagrid rowClick="edit" bulkActionButtons={<BulkActionButtons />}>
       <TextField source="name" label="Nom" />
       <NumberField source="sessions.length" label="Sessions" />
     </Datagrid>
