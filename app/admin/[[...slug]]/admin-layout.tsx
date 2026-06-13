@@ -6,11 +6,11 @@ import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 
 const CustomMenu = () => (
   <Menu>
-    <DashboardMenuItem to="/admin" />
-    <Menu.Item to="/admin/events" primaryText="Événements" leftIcon={<CalendarMonthIcon />} />
-    <Menu.Item to="/admin/sessions" primaryText="Sessions" leftIcon={<MicIcon />} />
-    <Menu.Item to="/admin/speakers" primaryText="Intervenants" leftIcon={<PeopleIcon />} />
-    <Menu.Item to="/admin/rooms" primaryText="Salles" leftIcon={<MeetingRoomIcon />} />
+    <DashboardMenuItem />
+    <Menu.Item to="/events" primaryText="Événements" leftIcon={<CalendarMonthIcon />} />
+    <Menu.Item to="/sessions" primaryText="Sessions" leftIcon={<MicIcon />} />
+    <Menu.Item to="/speakers" primaryText="Intervenants" leftIcon={<PeopleIcon />} />
+    <Menu.Item to="/rooms" primaryText="Salles" leftIcon={<MeetingRoomIcon />} />
   </Menu>
 );
 

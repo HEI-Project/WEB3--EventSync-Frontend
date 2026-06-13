@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { Admin, Resource, ShowGuesser } from 'react-admin';
 import { dataProvider } from '@/lib/api/data-provider';
 import { authProvider } from '@/lib/api/auth-provider';
@@ -26,47 +27,49 @@ export default function AdminPage() {
   if (!ready) return null;
 
   return (
-    <Admin
-      dataProvider={dataProvider}
-      authProvider={authProvider}
-      i18nProvider={i18nProvider}
-      layout={MyLayout}
-      dashboard={AdminDashboard}
-      theme={adminTheme}
-      basename="/admin"
-    >
-      <Resource
-        name="events"
-        list={EventList}
-        edit={EventEdit}
-        create={EventCreate}
-        show={ShowGuesser}
-        options={{ label: 'Événements' }}
-      />
-      <Resource
-        name="sessions"
-        list={SessionList}
-        edit={SessionEdit}
-        create={SessionCreate}
-        show={ShowGuesser}
-        options={{ label: 'Sessions' }}
-      />
-      <Resource
-        name="speakers"
-        list={SpeakerList}
-        edit={SpeakerEdit}
-        create={SpeakerCreate}
-        show={ShowGuesser}
-        options={{ label: 'Intervenants' }}
-      />
-      <Resource
-        name="rooms"
-        list={RoomList}
-        edit={RoomEdit}
-        create={RoomCreate}
-        show={ShowGuesser}
-        options={{ label: 'Salles' }}
-      />
-    </Admin>
+    <BrowserRouter basename="/admin">
+      <Admin
+        dataProvider={dataProvider}
+        authProvider={authProvider}
+        i18nProvider={i18nProvider}
+        layout={MyLayout}
+        dashboard={AdminDashboard}
+        theme={adminTheme}
+        basename="/admin"
+      >
+        <Resource
+          name="events"
+          list={EventList}
+          edit={EventEdit}
+          create={EventCreate}
+          show={ShowGuesser}
+          options={{ label: 'Événements' }}
+        />
+        <Resource
+          name="sessions"
+          list={SessionList}
+          edit={SessionEdit}
+          create={SessionCreate}
+          show={ShowGuesser}
+          options={{ label: 'Sessions' }}
+        />
+        <Resource
+          name="speakers"
+          list={SpeakerList}
+          edit={SpeakerEdit}
+          create={SpeakerCreate}
+          show={ShowGuesser}
+          options={{ label: 'Intervenants' }}
+        />
+        <Resource
+          name="rooms"
+          list={RoomList}
+          edit={RoomEdit}
+          create={RoomCreate}
+          show={ShowGuesser}
+          options={{ label: 'Salles' }}
+        />
+      </Admin>
+    </BrowserRouter>
   );
 }
