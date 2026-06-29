@@ -1,6 +1,4 @@
 import type { Metadata } from 'next'
-
-import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { Navbar } from '@/components/navbar'
 
@@ -20,7 +18,6 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <Navbar />
         <main>{children}</main>
-        {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )
