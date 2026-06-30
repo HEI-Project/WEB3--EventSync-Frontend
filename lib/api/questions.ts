@@ -9,5 +9,5 @@ export const questionsApi = {
       body: JSON.stringify({ content, authorName }),
     }),
   upvote: (id: string) =>
-    apiCall(`/questions/${id}/upvote`, { method: 'POST' }),
+    apiCall(`/sessions/questions/${id}/upvote`, { method: 'POST' }),
 };
